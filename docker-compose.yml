@@ -1,0 +1,50 @@
+version: "3"
+
+networks:
+    private_network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.10.0.0/24
+
+services:
+    wireguard:
+        image: linuxserver/wireguard:latest
+        container_name: wireguard
+        hostname: wireguard
+        restart: unless-stopped
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Europe/London
+            - PEERS=1
+            - PEERDNS=10.10.0.10
+            - INTERNAL_SUBNET=10.6.0.0
+        volumes:
+            - ./wireguard/config:/config
+            - /lib/modules:/lib/modules
+        ports:
+            - 51820:51820/udp
+        sysctls:
+            - net.ipv4.conf.all.src_valid_mark=1
+        networks:
+            private_network:
+                ipv4_address: 10.10.0.30
+        depends_on:
+            - adguard
+
+    adguard:
+        image: adguard/adguardhome
+        container_name: adguard
+        hostname: adguard
+        restart: unless-stopped
+        volumes:
+            - ./adguard/opt-adguard-work:/opt/adguardhome/work
+            - ./adguard/opt-adguard-conf:/opt/adguardhome/conf
+            - ./adguard/log:/opt/adguardhome/log
+        networks:
+            private_network:
+                ipv4_address: 10.10.0.10
