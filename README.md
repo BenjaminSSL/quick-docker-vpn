@@ -20,7 +20,7 @@ docker-compose up -d
 
 3. Connect to the VPN server using the WireGuard client. You can find the configuration file in the `adguard/config/peer{n}` directory.
 
-4. Before you can access the internet, you need to set up Adguard. To do this, open your browser and go to [http://10.10.0.10:3000](http://10.10.0.10:3000). Leave the default settings and create a new login with username and password. Once the setup is complete, you can start browsing the internet. The AdGuard Home dashboard is available at [http://10.10.0.10](http://10.10.0.10)`.
+4. Before you can access the internet, you need to set up Adguard. To do this, open your browser and go to [http://10.10.0.10:3000](http://10.10.0.10:3000). Leave the default settings and create a new login with username and password. Once the setup is complete, you can start browsing the internet. The AdGuard Home dashboard is available at [http://10.10.0.10](http://10.10.0.10).
 
 ## How to add a new peer
 
